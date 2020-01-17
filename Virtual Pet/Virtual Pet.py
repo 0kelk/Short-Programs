@@ -48,17 +48,22 @@ b = threading.Thread(target = promotion_func, name = 'promo_thread', daemon = Tr
 c = threading.Thread(target = levelamount_func, name = 'levels_thread', daemon = True)
 if os.path.exists("/home/akelk/Virtual Pet/Virtual Pet.txt") == True:
     f = open("Virtual Pet.txt", "r")
-    if f.mode == "r":
-        fa = f.readlines()
-        animal = fa[0][:-1]
-        hunger = int(fa[1])
-        thirst = int(fa[2])
-        happiness = int(fa[3])
-        money = int(fa[4])
-        promolevel = int(fa[5])
-        foodamount = int(fa[6])
-        drinkamount = int(fa[7])
-        itemamount = int(fa[8])
+    try:
+        if f.mode == "r":
+            fa = f.readlines()
+            animal = fa[0][:-1]
+            hunger = int(fa[1])
+            thirst = int(fa[2])
+            happiness = int(fa[3])
+            money = int(fa[4])
+            promolevel = int(fa[5])
+            foodamount = int(fa[6])
+            drinkamount = int(fa[7])
+            itemamount = int(fa[8])
+    except:
+        print("Your save file could not be read, please delete or fix the file and then try again.")
+        f.close()
+        exit()
     f.close()
     print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave")
 else:
