@@ -1,0 +1,13 @@
+This is a very short and simple videogame made by Oscar Kelk.
+It simulates taking care of a cat or a dog (although it is extremely simplified). You can use commands to feed your pet, buy items for them and more.
+This isn't so much a proper game as it is a little project for me to spend some time on.
+Have fun.
+
+Note: The .py file should be run inside this directory. If you wish to move it then it is recommended that you run it in a seperate directory from other files.
+
+Changelog:
+2020/01/07 - Initially created and uploaded the game.
+
+2020/06/05 - Fixed a rather silly problem in which I completely forgot to remove money from the player after they have bought a product.
+           - Changed the save file format from .txt to .save.
+           - Added the Delete save command, use to delete save file.

@@ -31,7 +31,7 @@ def levelamount_func():
             time.sleep(30)
             if hunger == 0 or thirst == 0:
                 print("Your pet is unhealthy and hasn't been fed so, unfortunately, they've passed away.")
-                os.remove("Virtual Pet.txt")
+                os.remove("Virtual Pet.save")
                 exit()
         time.sleep(45)
         hunger = hunger-5
@@ -46,8 +46,8 @@ def item_bought():
 z = threading.Thread(target = money_func, name = 'money_thread', daemon = True)
 b = threading.Thread(target = promotion_func, name = 'promo_thread', daemon = True)
 c = threading.Thread(target = levelamount_func, name = 'levels_thread', daemon = True)
-if os.path.exists("/home/akelk/Virtual Pet/Virtual Pet.txt") == True:
-    f = open("Virtual Pet.txt", "r")
+if os.path.exists("Virtual Pet.save") == True:
+    f = open("Virtual Pet.save", "r")
     try:
         if f.mode == "r":
             fa = f.readlines()
@@ -65,7 +65,7 @@ if os.path.exists("/home/akelk/Virtual Pet/Virtual Pet.txt") == True:
         f.close()
         exit()
     f.close()
-    print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave")
+    print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
 else:
     hunger = 100
     thirst = 100
@@ -84,7 +84,7 @@ else:
             animchoice = input("")
         else:
             wloopa = False
-    print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave")
+    print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
 z.start()
 b.start()
 c.start()
@@ -110,6 +110,8 @@ while wloopb:
                         foodamount = foodamount-1
                         print("You now have "+str(foodamount)+" packets of pet food.")
                         wloopc = False
+                    else:
+                        print("Sorry, you don't have any more packets of pet food.")
                 elif feedchoice.lower() == "drink":
                     if drinkamount > 0:
                         print("You've given them some more drink and they seem happy.")
@@ -117,6 +119,8 @@ while wloopb:
                         drinkamount = drinkamount-1
                         print("You now have "+str(drinkamount)+" bowls of water.")
                         wloopc = False
+                    else:
+                        print("Sorry, you don't have any more bowls of water.")
                 else:
                     print("Sorry, that is not food or drink.")
     elif command == "shop":
@@ -132,6 +136,7 @@ while wloopb:
                     foodamount = foodamount+1
                     wloopd = False
                     item_bought()
+                    money = money-50
                 else:
                     print("Sorry, you don't have enough money to purchase "+animal+" food (You can leave by leaving it blank) .")
             elif a == "water":
@@ -140,6 +145,7 @@ while wloopb:
                     drinkamount = drinkamount+1
                     wloopd = False
                     item_bought()
+                    money = money-20
                 else:
                     print("Sorry, you don't have enough money to purchase water.")
             elif a == "toys":
@@ -148,19 +154,37 @@ while wloopb:
                     itemamount = itemamount+1
                     wloopd = False
                     item_bought()
+                    money = money-30
                 else:
                     print("Sorry, you don't have enough money to purchase a toy.")
             elif a == "":
                 wloopd = False
     elif command == "help":
-        print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave")
+        print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
     elif command == "leave":
         print("Come back soon!")
         wloopb = False
+    elif command == "delete save":
+        savefileexistsd = True
+        deleteconfirm = input("Are you sure you want to delete your save file? y/n\n")
+        if deleteconfirm == "y":
+            try:
+                os.remove("Virtual Pet.save")
+            except:
+                print("It doesn't seem like you have a save file.")
+                print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
+                savefileexistsd = False
+            if savefileexistsd == True:
+                print("Deleting...")
+                exit()
+            else:
+                break
+        if deleteconfirm == "n":
+            print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
     else:
         print("That isn't a command, sorry.")
-        print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave")
-f = open("Virtual Pet.txt", "w")
+        print("You can use these commands:\nCheck levels\nFeed\nShop\nHelp\nLeave\nDelete save")
+f = open("Virtual Pet.save", "w")
 f.write(str(animal)+"\n"+str(hunger)+"\n"+str(thirst)+"\n"+str(happiness)+"\n"+str(money)+"\n"+str(promolevel)+"\n"+str(foodamount)+"\n"+str(drinkamount)+"\n"+str(itemamount))
 f.close()
 exit()
